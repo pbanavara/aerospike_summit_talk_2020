@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  aerospike:
+    image: aerospike/aerospike-server:latest
+    volumes:
+      - .:/etc/aerospike_2
+    ports:
+      - "3000:3000"
+    command: [asd, --config-file, /etc/aerospike_2/aerospike.conf]
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    links:
+      - aerospike
+    environment:
+      - AEROSPIKE_HOST=aerospike
+  
+        
